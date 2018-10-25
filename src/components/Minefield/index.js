@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import matrixHelper from '../../helpers/matrixHelper'
 import Cell from '../Cell';
-import path from 'path';
 
 const GAME_STATUSI = {
     WON     :   'WON',
@@ -24,11 +23,6 @@ class Minefield extends Component {
     workingGrid = null
     
     cellClickHandler(x, y) {
-        const myWorker = new Worker(path.join('/src/Minefield/', 'worker.js'));
-        myWorker.postMessage('Hi');
-        myWorker.onmessage = function(e) {
-            console.log(e.data);
-        }
         this.openCell(x,y);
         this.setState(() => ({
             grid: this.workingGrid

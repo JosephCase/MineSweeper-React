@@ -3,8 +3,8 @@ import MineSweeperApp from '../Minefield'
 import matrixHelper from '../../helpers/matrixHelper'
 
 const settings = {
-    size: 10,
-    mineChance: 0.1
+    size: 5,
+    mineChance: 0
 }
 
 const intitialCellState = {

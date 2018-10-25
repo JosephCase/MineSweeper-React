@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import matrixHelper from '../../helpers/matrixHelper'
 import Cell from '../Cell';
 import path from 'path';
+// import Worker from './index.worker.js';
 
 const GAME_STATUSI = {
     WON     :   'WON',
@@ -24,16 +25,36 @@ class Minefield extends Component {
     workingGrid = null
     
     cellClickHandler(x, y) {
-        const myWorker = new Worker(path.join('/src/Minefield/', 'worker.js'));
-        myWorker.postMessage('Hi');
-        myWorker.onmessage = function(e) {
-            console.log(e.data);
-        }
-        this.openCell(x,y);
-        this.setState(() => ({
-            grid: this.workingGrid
-        }))
-        this.checkWin();
+        this.workingGrid = this.state.grid.slice();
+        this.openCellAsyc(x,y).then(() => {
+            this.setState(() => ({
+                grid: this.workingGrid
+            }))
+            this.checkWin();
+        });
+    }
+
+    openCellAsyc(x,y) {
+        const workingGrid = this.workingGrid;
+        return new Promise((resolve, rej) => {
+            const worker = new Worker('./index.worker.js');
+            
+            const message = { grid: this.workingGrid, x, y };
+
+            console.log('message sent', message);
+
+            worker.postMessage(message);
+
+            worker.onmessage = function(e) {
+			    worker.terminate();
+                const cellsToOpen = e.data;
+                cellsToOpen.forEach(cell => {
+                    console.log(cell);
+                    workingGrid[cell.x][cell.y].open = true;
+                })
+                resolve();
+            }
+        })
     }
 
     cellRightClickHandler(x, y) {

@@ -1,5 +1,5 @@
 import matrixHelper from '../../helpers/matrixHelper';
-// import Worker from './hack.worker.js';
+// import Worker from './index.worker.js';
 
 onmessage = function(message) {
 	
@@ -32,13 +32,13 @@ onmessage = function(message) {
 const addCells = (grid, x, y) => {
 
 	return new Promise(res => {
-		const worker = new Worker('./index.worker.js');
-		worker.postMessage({ grid, x, y });
+		const worker = new Worker();
+		worker.postMessage(grid, i, j);
 		worker.onmessage = function(e) {
 				const childCells = e.data;
 				cellsToOpen = [...cellsToOpen, ...childCells];
 				postMessage(cellsToOpen)
 		}
 	})
-
+	
 }

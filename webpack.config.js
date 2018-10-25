@@ -7,11 +7,18 @@ module.exports = {
         filename: 'bundle.js'
     },
     module: {   // describes transformation, e.g. for all .js use babel
-        rules: [{
-            loader: 'babel-loader',
-            test: /\.js$/,
-            exclude: /node_modules/
-        }]
+        rules: [
+            {
+                loader: 'babel-loader',
+                test: /\.js$/,
+                exclude: /node_modules/
+            },
+            {
+                loader: 'worker-loader',
+                test: /\.worker.js$/,
+                exclude: /node_modules/
+            }
+        ]
     },
     devtool: 'cheap-module-eval-source-map', //sourcemaps
     devServer: {

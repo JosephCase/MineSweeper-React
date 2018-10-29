@@ -1,0 +1,22 @@
+.control {
+    padding: 10px 50px;
+    border: 1px solid black;
+    background: lightGrey;
+    width: 250px;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 30px 0;
+}
+
+.option span {
+    font-family: arial, sans-serif;
+    font-size: 18px;
+    background: #fff;
+    width: 100px;
+    text-align: center;
+    padding: 20px;
+}

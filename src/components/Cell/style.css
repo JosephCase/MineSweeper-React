@@ -1,0 +1,41 @@
+.default {
+    margin: 0;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    border: 1px solid black;
+    font-family: arial, sans-serif;
+    background: lightgrey;
+    cursor: pointer;
+    user-select: none;
+    color: black;
+}
+
+.open {
+    composes: default;
+    background: #fff;
+}
+
+.mine {
+    composes: default;
+    background: grey;
+}
+
+.marked {
+    composes: default;
+    background: black;
+    color: white;
+}
+.mistaken {
+    composes: marked;
+    color: red;
+}
+
+.mineClicked {
+    composes: default;
+    background-color: red;
+}
+
+
+    

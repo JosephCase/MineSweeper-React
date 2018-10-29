@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Wrapper from './components/Wrapper';
+import Minesweeper from './components/Minesweeper';
 
-ReactDOM.render(<Wrapper />, document.getElementById('app'));
+ReactDOM.render(<Minesweeper settings={{ size: 10, mineChance: 0.1 }} />, document.getElementById('app'));

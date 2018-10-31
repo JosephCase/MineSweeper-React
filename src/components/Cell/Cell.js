@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cellStyles from './style.css';
 
-
-const calculateDisplayValue = ({adjacentMines = 0, hasMine, open, marked}) => {
+const calculateDisplayValue = ({ adjacentMines = 0, hasMine, open, marked }) => {
     if (open) {
         if (hasMine) {
             return 'x';
@@ -18,7 +18,7 @@ const calculateDisplayValue = ({adjacentMines = 0, hasMine, open, marked}) => {
         return '';
     }
 }
-const calculateClass = ({open = false, hasMine, marked, mistaken, exploded}) => {
+const calculateClass = ({ open = false, hasMine, marked, mistaken, exploded }) => {
     if (open) {
         if (hasMine) {
             if (exploded) {
@@ -36,27 +36,24 @@ const calculateClass = ({open = false, hasMine, marked, mistaken, exploded}) => 
     }
     return cellStyles.default;
 }
-const clickHandler = ({disableClick, marked, onClick}) => {
+const clickHandler = ({ marked, onClick }) => {
 
     // cancel the click event if it has been disabled
-    if (disableClick || marked) {
+    if (marked) {
         return;
     }
 
     onClick();
 }
-const rightClickHandler = ({e, disableClick, onRightClick}) => {
+const rightClickHandler = ({ e, onRightClick }) => {
     e.preventDefault();
-    if (disableClick) {
-        return;
-    }
     onRightClick();
 }
 
 
 const Cell = (props) => {
 
-    const { 
+    const {
         adjacentMines,
         hasMine,
         open,
@@ -69,13 +66,41 @@ const Cell = (props) => {
     } = props;
 
     const displayVal = calculateDisplayValue({ adjacentMines, hasMine, open, marked });
+    const className = calculateClass({ open, hasMine, marked, mistaken, exploded });
+
     return (
         <p
-            className={calculateClass({open, hasMine, marked, mistaken, exploded})}
-            onClick={() => clickHandler({disableClick, marked, onClick})}
-            onContextMenu={(e) => rightClickHandler({e, disableClick, onRightClick})}
+            className={className}
+            onClick={() => clickHandler({ marked, onClick })}
+            onContextMenu={(e) => rightClickHandler({ e, onRightClick })}
         >{displayVal}</p>
     )
+}
+
+Cell.defaultProps = {
+    adjacentMines: 0,
+    hasMine: false,
+    open: false,
+    marked: false,
+    mistaken: false,
+    exploded: false,
+    disableClick: false,
+    onClick: () => { },
+    onRightClick: (e) => {
+        e.preventDefault();
+    }
+}
+
+Cell.propTypes = {
+    adjacentMines: PropTypes.number,
+    hasMine: PropTypes.bool,
+    open: PropTypes.bool,
+    marked: PropTypes.bool,
+    mistaken: PropTypes.bool,
+    exploded: PropTypes.bool,
+    disableClick: PropTypes.bool,
+    onClick: PropTypes.func,
+    onRightClick: PropTypes.func
 }
 
 export default Cell

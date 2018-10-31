@@ -1,5 +1,7 @@
 const path = require('path');
 
+console.log(`Running in ${process.env.NODE_ENV.toUpperCase()} mode`);
+
 module.exports = {
     entry: './src/app.js',
     output: {
@@ -27,6 +29,11 @@ module.exports = {
                 //         }
                 //     }
                 // ]
+            },
+            {
+                loader: 'worker-loader',
+                test: /\.worker.js$/,
+                exclude: /node_modules/
             }
         ]
     },

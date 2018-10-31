@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import matrixHelper from '../../helpers/matrixHelper'
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Cell from '../Cell';
 import styles from './style.css';
+import RevealIterativeWorker from './revealIterative.worker'
+import { setGrid, setGameStatus } from '../Minesweeper/actions';
 
 const GAME_STATUSI = {
     WON: 'WON',
@@ -11,58 +14,55 @@ const GAME_STATUSI = {
 
 class Minefield extends Component {
 
-    workingGrid = null
+    worker = new RevealIterativeWorker();
 
     cellClickHandler(x, y) {
-        const grid = revealIterative(this.props.grid, x, y);
-        console.log(grid);
-        this.props.updateGrid(grid);
-        // if (this.checkWin() === true) {
-        //     this.finishGame(true);
-        // };
+
+        let grid = [...this.props.grid];
+
+        if (grid[x][y].hasMine) {
+            grid[x][y].open = true;
+            grid[x][y].exploded = true;
+            grid = this.finishGame(false, grid);
+            this.props.setGrid(grid);
+        } else {
+            this.worker.postMessage({ grid: this.props.grid, x, y })
+            this.worker.onmessage = (e) => {
+                grid = e.data;
+                if (this.checkWin(grid) === true) {
+                    this.finishGame(true);
+                };
+                this.props.setGrid(grid);
+            }
+        }
     }
 
     cellRightClickHandler(x, y) {
         const newGrid = [...this.props.grid];
         newGrid[x][y].marked = !newGrid[x][y].marked;
-        this.props.updateGrid(newGrid);
+
+        if (this.checkWin(newGrid) === true) {
+            this.finishGame(true);
+        };
+
+        this.props.setGrid(newGrid);
     }
 
-    openCell(x, y, clicked) {
-        this.workingGrid = [...this.props.grid];
-        this.workingGrid[x][y].open = true;
+    checkWin(grid) {
 
-        if (this.workingGrid[x][y].hasMine) {
-            this.workingGrid[x][y].exploded = true;
-            this.finishGame(false);
-        } else if (this.workingGrid[x][y].adjacentMines === 0) {
-            this.openAdjacentCells(x, y);
-        }
-    }
-
-    openAdjacentCells(x, y) {
-        matrixHelper.forAdjacent(this.workingGrid, x, y, (cell, i, j) => {
-            if (!cell.open && !cell.marked) {
-                this.openCell(i, j);
-            }
-        })
-    }
-
-    checkWin() {
-
-        const win = this.props.grid.every(column => column.every(cell => (cell.open || cell.marked)));
+        const win = grid.every(column => column.every(cell => (cell.open || cell.marked)));
 
         return win;
 
     }
 
-    finishGame(win) {
+    finishGame(win, grid) {
 
-        const gameStatus = win ? GAME_STATUSI.WON : GAME_STATUSI.LOST
-        this.props.updateStatus(gameStatus);
+        const gameStatus = win ? GAME_STATUSI.WON : GAME_STATUSI.LOST;
+        this.props.setGameStatus(gameStatus);
 
         if (!win) {
-            this.workingGrid = matrixHelper.map(this.workingGrid, (cell) => {
+            grid = grid.map(column => column.map(cell => {
                 if (cell.hasMine && !cell.open && !cell.marked) {
                     cell.open = true;
                 }
@@ -70,12 +70,19 @@ class Minefield extends Component {
                     cell.mistaken = true;
                 }
                 return cell;
-            })
+            }))
         }
+
+        return grid;
+
     }
 
     renderColumn(column, i) {
-        const { status } = this.props;
+
+        const { gameStatus } = this.props;
+        const clickFunction = (gameStatus === GAME_STATUSI.PLAYING) ? (i, j) => this.cellClickHandler(i, j) : () => { };
+        const rightClickFunction = (gameStatus === GAME_STATUSI.PLAYING) ? (i, j) => this.cellRightClickHandler(i, j) : () => { };
+
         return (
             <div key={i}>
                 {
@@ -83,9 +90,8 @@ class Minefield extends Component {
                         <Cell
                             key={j}
                             {...cell}
-                            onClick={() => this.cellClickHandler(i, j)}
-                            onRightClick={() => this.cellRightClickHandler(i, j)}
-                            disableClick={status !== GAME_STATUSI.PLAYING}
+                            onClick={() => clickFunction(i,j)}
+                            onRightClick={() => rightClickFunction(i, j)}
                         />
                     ))
                 }
@@ -102,44 +108,32 @@ class Minefield extends Component {
     }
 }
 
-const revealIterative = (grid, x, y) => {
-    let workingGrid = [...grid];
-
-    let toOpen = [{x,y}];
-    let index = 0;
-
-    while(index < toOpen.length) {
-
-        let {x,y} = toOpen[index];
-
-        // if already open, it means we're repeating a path, lets skip
-        if(workingGrid[x][y].open === true) {
-            index++;
-            continue;
-        }
-
-        workingGrid[x][y].open = true;
-        index++;
-
-        if(workingGrid[x][y].adjacentMines === 0) {
-
-            for (let i = x - 1; i <= x + 1; i++) {
-                if(workingGrid[i]) {
-                    for (let j = y - 1; j <= y + 1; j++) {
-                        if(!(i === x && j === y) && workingGrid[i][j]) {
-                            
-                            if(workingGrid[i][j].open === false) {
-                                toOpen = [...toOpen, {x: i, y: j}]
-                            }
-
-                        }
-                    }
-                }
-            }
-        }
+const mapStateToProps = ({ grid, gameStatus }) => {
+    return {
+        grid,
+        gameStatus
     }
-
-    return workingGrid;
 }
 
-export default Minefield
+const mapDispatchToProps = dispatch => {
+    return {
+        setGrid: (grid) => dispatch(setGrid(grid)),
+        setGameStatus: (status) => dispatch(setGameStatus(status))
+    }
+}
+
+Minefield.defaultProps = {
+    grid: [[]],
+    gameStatus: 'PLAYING',
+    setGrid: () => {},
+    setGameStatus: () => {}
+}
+
+Minefield.propTypes = {
+    grid: PropTypes.arrayOf(PropTypes.array),
+    gameStatus: PropTypes.oneOf(['PLAYING', 'WON', 'LOST']),
+    setGrid: PropTypes.func,
+    setGameStatus: PropTypes.func
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Minefield);

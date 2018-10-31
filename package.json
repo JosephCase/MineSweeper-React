@@ -6,7 +6,7 @@
   "scripts": {
     "serve": "live-server public",
     "build": "webpack",
-    "dev-server": "webpack-dev-server",
+    "dev-server": "NODE_ENV=development webpack-dev-server",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
@@ -19,11 +19,15 @@
     "babel-preset-stage-2": "^6.24.1",
     "css-loader": "^1.0.0",
     "live-server": "^1.2.0",
+    "prop-types": "^15.6.2",
     "react": "16.0.0",
     "react-dom": "16.0.0",
+    "react-redux": "^5.1.0",
+    "redux": "^4.0.1",
     "style-loader": "^0.23.1",
     "webpack": "3.1.0",
-    "webpack-dev-server": "2.5.1"
+    "webpack-dev-server": "2.5.1",
+    "worker-loader": "^2.0.0"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.4.11",

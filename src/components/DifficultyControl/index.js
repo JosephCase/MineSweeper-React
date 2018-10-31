@@ -1,6 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Cell from '../Cell';
 import styles from './style.css';
+import { connect } from 'react-redux';
+import { setMineChance } from '../Minesweeper/actions';
 
 const difficulties = [
     { mineChance: 0.25, text: 'Super hard' },
@@ -10,30 +13,46 @@ const difficulties = [
     { mineChance: 0.05, text: 'Super easy' },
 ]
 
-const DifficultyControl = ({ mineChance, selectDifficulty }) => (
+const DifficultyControl = ({ mineChance, setMineChance }) => (
     <div className={styles.control}>
-    {
-        difficulties.map(difficulty => {
-            const isSelectedDifficulty = mineChance === difficulty.mineChance;
-            const clickFunction = !isSelectedDifficulty ? () => selectDifficulty(difficulty.mineChance) : () => { }
+        {
+            difficulties.map(difficulty => {
+                const isSelectedDifficulty = mineChance === difficulty.mineChance;
                 return (
                     <div key={difficulty.mineChance} className={styles.option}>
-
-                        {/* isSelectedDifficulty ?
-                            <Cell marked={true} /> : 
-                            <Cell open={true} onClick={() => selectDifficulty(difficulty.mineChance)} /> */}
-
-                        <Cell 
-                            marked={isSelectedDifficulty} 
+                        <Cell
+                            marked={isSelectedDifficulty}
                             open={!isSelectedDifficulty}
-                            onClick={clickFunction}
+                            onClick={() => setMineChance(difficulty.mineChance)}
                         />
-
-                    <span>{difficulty.text}</span>
-                </div>
-    )})
-}
+                        <span>{difficulty.text}</span>
+                    </div>
+                )
+            })
+        }
     </div>
 )
 
-export default DifficultyControl;
+const mapStateToProps = ({ settings }) => {
+    return {
+        mineChance: settings.mineChance
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        setMineChance: (mineChance, size) => {
+            dispatch(setMineChance(mineChance));
+        }
+    }
+}
+
+DifficultyControl.defaultProps = {
+    setMineChance: () => {}
+}
+
+DifficultyControl.propTypes = {
+    setMineChance: PropTypes.func
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DifficultyControl);

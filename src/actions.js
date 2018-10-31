@@ -3,6 +3,7 @@ export const actionTypes = {
     SET_GRID: 'SET_GRID',
     SET_GAME_STATUS: 'SET_GAME_STATUS',
     SET_MINE_CHANCE: 'SET_MINE_CHANCE',
+    SET_SIZE: 'SET_SIZE'
 } 
 
 
@@ -29,3 +30,8 @@ export const setMineChance = mineChance => (
         mineChance
     }
 )
+
+export const setSize = size => ({
+    type: actionTypes.SET_SIZE,
+    size
+})

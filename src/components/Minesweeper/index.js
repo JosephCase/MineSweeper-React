@@ -3,30 +3,22 @@ import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import Minefield from '../Minefield'
 import DifficultyControl from '../DifficultyControl';
-import { createGrid } from './actions';
+import SizeControl from '../SizeControl';
+import { createGrid } from '../../actions';
 
-class Minesweeper extends PureComponent {
+const Minesweeper = (props) => {
 
-    constructor(props) {
-        super(props);
-        const { createGrid } = props;
-        createGrid();
-    }
+    const { createGrid } = props;
+    createGrid();
 
-    render() {
-        return (
-            <div>
-                <Minefield />
-                <DifficultyControl />
-            </div>
-        )
-    }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        createGrid: () => dispatch(createGrid())
-    }
+    return (
+        <div>
+            <Minefield />
+            <DifficultyControl />
+            <SizeControl />
+        </div>
+    )
+    
 }
 
 Minesweeper.defaultProps = {
@@ -37,4 +29,9 @@ Minesweeper.propTypes = {
     createGrid: PropTypes.func
 }
 
+const mapDispatchToProps = dispatch => {
+    return {
+        createGrid: () => dispatch(createGrid())
+    }
+}
 export default connect(null, mapDispatchToProps)(Minesweeper);

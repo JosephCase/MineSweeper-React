@@ -8,15 +8,14 @@ onmessage = (message) => {
     while(index < toOpen.length) {
 
         let {x,y} = toOpen[index];
+        index++;
 
         // if already open, it means we're repeating a path, lets skip
-        if(grid[x][y].open === true) {
-            index++;
+        if(grid[x][y].open === true || grid[x][y].marked === true) {
             continue;
         }
 
         grid[x][y].open = true;
-        index++;
 
         if(grid[x][y].adjacentMines === 0) {
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Cell from '../Cell';
 import styles from './style.css';
 import { connect } from 'react-redux';
-import { setMineChance } from '../Minesweeper/actions';
+import { setMineChance } from '../../actions';
 
 const difficulties = [
     { mineChance: 0.25, text: 'Super hard' },

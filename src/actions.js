@@ -12,7 +12,7 @@ export const createGrid = () => (
         type: actionTypes.CREATE_GRID,
     }
 )
-export const setGrid = (grid) => (
+export const setGrid = grid => (
     {
         type: actionTypes.SET_GRID,
         grid
@@ -30,8 +30,9 @@ export const setMineChance = mineChance => (
         mineChance
     }
 )
-
-export const setSize = size => ({
-    type: actionTypes.SET_SIZE,
-    size
-})
+export const setSize = size => (
+    {
+        type: actionTypes.SET_SIZE,
+        size
+    }
+)

@@ -3,7 +3,7 @@ const path = require('path');
 console.log(`Running in ${process.env.NODE_ENV.toUpperCase()} mode`);
 
 module.exports = {
-    entry: './src/app.js',
+    entry: ['babel-polyfill', './src/app.js'],
     output: {
         path: path.join(__dirname, 'public'),
         filename: 'bundle.js'

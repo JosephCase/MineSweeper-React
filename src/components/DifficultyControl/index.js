@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Cell from '../Cell';
-import styles from './style.css';
+import Panel from '../StyledCompontents/Floater';
+import { Option, StyledDifficultyControl } from './styledComponents';
 import { connect } from 'react-redux';
 import { setMineChance } from '../../actions';
 
@@ -14,23 +14,22 @@ const difficulties = [
 ]
 
 const DifficultyControl = ({ mineChance, setMineChance }) => (
-    <div className={styles.control}>
+    <StyledDifficultyControl vertical>
         {
             difficulties.map(difficulty => {
                 const isSelectedDifficulty = mineChance === difficulty.mineChance;
                 return (
-                    <div key={difficulty.mineChance} className={styles.option}>
-                        <Cell
-                            marked={isSelectedDifficulty}
-                            open={!isSelectedDifficulty}
-                            onClick={() => setMineChance(difficulty.mineChance)}
-                        />
-                        <span>{difficulty.text}</span>
-                    </div>
+                    <Option 
+                        key={difficulty.mineChance}
+                        onClick={() => setMineChance(difficulty.mineChance)}
+                        selected={isSelectedDifficulty}
+                    >
+                        {difficulty.text}
+                    </Option>
                 )
             })
         }
-    </div>
+    </StyledDifficultyControl>
 )
 
 const mapStateToProps = ({ settings }) => {

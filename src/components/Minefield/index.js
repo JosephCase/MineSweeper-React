@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Cell from '../Cell';
-import styles from './style.css';
 import RevealIterativeWorker from './revealIterative.worker'
 import { setGrid, setGameStatus } from '../../actions';
+import { StyledMineField } from './styledComponents';
 
 const GAME_STATUSI = {
     WON: 'WON',
@@ -101,9 +101,9 @@ class Minefield extends Component {
     render() {
         const { grid } = this.props;
         return (
-            <div className={styles.mineField}>
+            <StyledMineField>
                 {grid.map(this.renderColumn, this)}
-            </div>
+            </StyledMineField>
         )
     }
 }

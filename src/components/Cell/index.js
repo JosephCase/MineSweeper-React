@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cellStyles from './style.css';
+import { StyledCell } from './styledComponents';
 
 const calculateDisplayValue = ({ adjacentMines = 0, hasMine, open, marked }) => {
     if (open) {
@@ -18,24 +18,7 @@ const calculateDisplayValue = ({ adjacentMines = 0, hasMine, open, marked }) => 
         return '';
     }
 }
-const calculateClass = ({ open = false, hasMine, marked, mistaken, exploded }) => {
-    if (open) {
-        if (hasMine) {
-            if (exploded) {
-                return cellStyles.mineClicked;
-            }
-            return cellStyles.mine;
-        }
-        return cellStyles.open
-    } else if (marked) {
-        if (mistaken) {
-            return cellStyles.mistaken;
-        } else {
-            return cellStyles.marked;
-        }
-    }
-    return cellStyles.default;
-}
+
 const clickHandler = ({ marked, onClick }) => {
 
     // cancel the click event if it has been disabled
@@ -60,20 +43,22 @@ const Cell = (props) => {
         marked,
         mistaken,
         exploded,
-        disableClick,
         onClick,
         onRightClick
     } = props;
 
     const displayVal = calculateDisplayValue({ adjacentMines, hasMine, open, marked });
-    const className = calculateClass({ open, hasMine, marked, mistaken, exploded });
 
     return (
-        <p
-            className={className}
+        <StyledCell
             onClick={() => clickHandler({ marked, onClick })}
             onContextMenu={(e) => rightClickHandler({ e, onRightClick })}
-        >{displayVal}</p>
+            open={open}
+            mine={hasMine}
+            marked={marked}
+            mistaken={mistaken}
+            exploded={exploded}
+        >{displayVal}</StyledCell>
     )
 }
 
@@ -84,7 +69,6 @@ Cell.defaultProps = {
     marked: false,
     mistaken: false,
     exploded: false,
-    disableClick: false,
     onClick: () => { },
     onRightClick: (e) => {
         e.preventDefault();
@@ -98,7 +82,6 @@ Cell.propTypes = {
     marked: PropTypes.bool,
     mistaken: PropTypes.bool,
     exploded: PropTypes.bool,
-    disableClick: PropTypes.bool,
     onClick: PropTypes.func,
     onRightClick: PropTypes.func
 }

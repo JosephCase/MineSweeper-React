@@ -5,6 +5,8 @@ import Minefield from '../Minefield'
 import DifficultyControl from '../DifficultyControl';
 import SizeControl from '../SizeControl';
 import { createGrid } from '../../actions';
+import Floater from '../StyledCompontents/Floater';
+import { StyledMineSweeper, Wrapper } from './styledComponents';
 
 const Minesweeper = (props) => {
 
@@ -12,17 +14,19 @@ const Minesweeper = (props) => {
     createGrid();
 
     return (
-        <div>
-            <Minefield />
-            <DifficultyControl />
+        <StyledMineSweeper vertical>
+            <Wrapper>
+                <Minefield />
+                <DifficultyControl />
+            </Wrapper>
             <SizeControl />
-        </div>
+        </StyledMineSweeper>
     )
-    
+
 }
 
 Minesweeper.defaultProps = {
-    createGrid: () => {}
+    createGrid: () => { }
 }
 
 Minesweeper.propTypes = {

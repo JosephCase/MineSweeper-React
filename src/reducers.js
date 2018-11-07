@@ -1,5 +1,8 @@
 import { actionTypes } from './actions'
 import { combineReducers } from 'redux';
+import config from './config';
+
+const { difficulties, defaultSize } = config;
 
 const { SET_GRID, SET_MINE_CHANCE, SET_SIZE, SET_PLAY_DIMENSIONS } = actionTypes;
 
@@ -15,7 +18,7 @@ const grid = (state = [[]], action) => {
     }
 }
 
-const mineChance = (state = 0.1, action) => {
+const mineChance = (state = difficulties[2].mineChance, action) => {
     const { type, mineChance } = action;
     switch (type) {
         case SET_MINE_CHANCE:
@@ -25,7 +28,7 @@ const mineChance = (state = 0.1, action) => {
     }
 }
 
-const size = (state = 10, action) => {
+const size = (state = defaultSize, action) => {
     const { type, size } = action;
     switch (type) {
         case SET_SIZE:

@@ -4,14 +4,9 @@ import { Option, StyledDifficultyControl } from './styledComponents';
 import { connect } from 'react-redux';
 import { setMineChance } from '../../actions';
 import { getMineChance } from '../../selectors';
+import config from '../../config';
 
-const difficulties = [
-    { mineChance: 0.25, text: 'Super hard' },
-    { mineChance: 0.2, text: 'Hard' },
-    { mineChance: 0.15, text: 'Normal' },
-    { mineChance: 0.1, text: 'Easy' },
-    { mineChance: 0.05, text: 'Super easy' },
-]
+const { difficulties } = config;
 
 const DifficultyControl = ({ mineChance, setMineChance }) => (
     <StyledDifficultyControl vertical>
@@ -19,7 +14,7 @@ const DifficultyControl = ({ mineChance, setMineChance }) => (
             difficulties.map(difficulty => {
                 const isSelectedDifficulty = mineChance === difficulty.mineChance;
                 return (
-                    <Option 
+                    <Option
                         key={difficulty.mineChance}
                         onClick={() => setMineChance(difficulty.mineChance)}
                         selected={isSelectedDifficulty}
@@ -47,7 +42,7 @@ const mapDispatchToProps = dispatch => {
 }
 
 DifficultyControl.defaultProps = {
-    setMineChance: () => {},
+    setMineChance: () => { },
     mineChance: difficulties[0].mineChance
 }
 

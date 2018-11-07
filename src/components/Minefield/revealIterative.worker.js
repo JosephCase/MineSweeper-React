@@ -24,7 +24,7 @@ onmessage = (message) => {
                     for (let j = y - 1; j <= y + 1; j++) {
                         if(!(i === x && j === y) && grid[i][j]) {
                             
-                            if(grid[i][j].open === false) {
+                            if(!grid[i][j].open) {
                                 toOpen = [...toOpen, {x: i, y: j}]
                             }
 

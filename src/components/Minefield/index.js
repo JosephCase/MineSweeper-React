@@ -22,7 +22,7 @@ class Minefield extends PureComponent {
         let grid = [...this.props.grid];
 
         if (grid[x][y].hasMine) {
-            grid[x][y] = { ...grid[x][y], ...{open: true, exploded: true}};
+            grid[x][y] = { ...grid[x][y], open: true, exploded: true};
             grid = this.getGameLostGrid(grid);
             this.props.setGrid(grid);
         } else {

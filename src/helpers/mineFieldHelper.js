@@ -1,19 +1,10 @@
-const intitialCellState = {
-    hasMine: false,
-    adjacentMines: 0,
-    open: false,
-    marked: false,
-    mistaken: false
-}
-
 
 export const createGrid = ({ size, mineChance }) => {
     let grid = [];
     for (let i = 0; i < size; i++) {
         let column = [];
         for (let j = 0; j < size; j++) {
-            const hasMine = (Math.random() < mineChance);
-            const cell = Object.assign({}, intitialCellState, { hasMine })
+            const cell = { hasMine: Math.random() < mineChance }
             column = [...column, cell]
         }
         grid = [...grid, column]
@@ -50,7 +41,7 @@ const populateAdjacentMineCounts = (grid) => {
 
 const getAdjacentCellsCount = (grid, x, y) => {
     let mineCount = 0;
-    forAdjacent(grid, x, y, (cell) => {
+    forAdjacent(grid, x, y, cell => {
         if (cell.hasMine) {
             mineCount++;
         }

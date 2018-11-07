@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 
 const { SET_GRID, SET_MINE_CHANCE, SET_SIZE, SET_PLAY_DIMENSIONS } = actionTypes;
 
-const grid = (state = [[]], action, settings) => {
+const grid = (state = [[]], action) => {
 
     const { type } = action;
 

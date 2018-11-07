@@ -47,11 +47,13 @@ const mapDispatchToProps = dispatch => {
 }
 
 DifficultyControl.defaultProps = {
-    setMineChance: () => {}
+    setMineChance: () => {},
+    mineChance: difficulties[0].mineChance
 }
 
 DifficultyControl.propTypes = {
-    setMineChance: PropTypes.func
+    setMineChance: PropTypes.func,
+    mineChance: PropTypes.number
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DifficultyControl);

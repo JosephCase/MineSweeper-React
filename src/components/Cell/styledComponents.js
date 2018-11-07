@@ -1,28 +1,30 @@
 import styled from 'styled-components';
 
-const calculateBgColor = ({ open, mine, marked, mistaken, exploded }) => {
+const getBackgroundColor = ({ open, mine, marked, exploded }) => {
+
+    if(open && mine && exploded) {
+        return 'red';
+    }
+    if(open && mine) {
+        return 'grey';
+    }
     if(open) {
-        if(mine) {
-            if(exploded) {
-                return 'red';
-            }
-            return 'grey';
-        }
         return 'white';
-    } else {
-        if(marked) {
-            return 'black';
-        }
+    }
+    if(!open && marked) {
+        return 'black';
+    }
+    if(!open) {
         return 'lightgrey';
     }
 }
 
-const calculateColor = ({ open, mine, marked, mistaken, exploded }) => {
+const getColor = ({ open, marked, mistaken }) => {
+    if(!open && marked && mistaken) {
+        return 'red';
+    }
     if(!open && marked) {
-        if(mistaken) {
-            return 'red';
-        }
-        return 'white';
+       return 'white';
     }
     return 'black';
 }
@@ -35,8 +37,8 @@ export const StyledCell = styled.p`
     line-height: ${props => props.cellSize}px;
     text-align: center;
     border: 1px solid black;
-    background: ${props => calculateBgColor(props)};
+    background: ${props => getBackgroundColor(props)};
     cursor: pointer;
     user-select: none;
-    color: ${props => calculateColor(props)};
+    color: ${props => getColor(props)};
 `;

@@ -3,26 +3,31 @@ import PropTypes from 'prop-types';
 import { StyledCell } from './styledComponents';
 import config from '../../config';
 
-const calculateDisplayValue = ({ adjacentMines = 0, hasMine, open, marked }) => {
-    if (open) {
-        if (hasMine) {
-            return 'x';
-        }
-        if (adjacentMines === 0) {
-            return '';
-        }
-        return adjacentMines;
-    } else {
-        if (marked) {
-            return 'o'
-        }
+const getDisplayValue = ({ adjacentMines = 0, hasMine, open, marked }) => {
+
+    if (open && hasMine) {
+        return 'x';
+    }
+    if (open && adjacentMines === 0) {
         return '';
     }
+    if (open) {
+        return adjacentMines;
+    }
+
+    if (!open && marked) {
+        return 'o';
+    }
+
+    if (!open) {
+        return ''
+    }
+
 }
 
 const clickHandler = ({ marked, onClick }) => {
 
-    // cancel the click event if it has been disabled
+    // stop left click when the cell is marked
     if (marked) {
         return;
     }
@@ -37,6 +42,8 @@ const rightClickHandler = ({ e, onRightClick }) => {
 
 const Cell = (props) => {
 
+    const { cellSize } = config;
+
     const {
         adjacentMines,
         hasMine,
@@ -48,9 +55,7 @@ const Cell = (props) => {
         onRightClick
     } = props;
 
-    const displayVal = calculateDisplayValue({ adjacentMines, hasMine, open, marked });
-
-    const { cellSize } = config;    // [X] doing this directly in the import
+    const displayVal = getDisplayValue({ adjacentMines, hasMine, open, marked });
 
     return (
         <StyledCell

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { StyledGameStatus } from './styledComponents';
 import { createGrid } from '../../actions';
 import { getGameStatus } from '../../selectors';
+import PropTypes from 'prop-types';
 
 const GameStatus = ({gameStatus, replay}) => {
     return (
@@ -14,6 +15,16 @@ const GameStatus = ({gameStatus, replay}) => {
             <p onClick={replay}>Replay?</p>
         </StyledGameStatus>
     )
+}
+
+GameStatus.defaultProps = {
+    gameStatus: 'PLAYING',
+    replay: () => {}
+}
+
+GameStatus.propTypes = {
+    gameStatus: PropTypes.oneOf(['PLAYING', 'WON', 'LOST']),
+    replay: PropTypes.func
 }
 
 const mapStateToProps = (state) => ({

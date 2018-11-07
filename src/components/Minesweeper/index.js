@@ -5,7 +5,6 @@ import Minefield from '../Minefield'
 import DifficultyControl from '../DifficultyControl';
 import SizeControl from '../SizeControl';
 import { createGrid } from '../../actions';
-import Floater from '../StyledCompontents/Floater';
 import { StyledMineSweeper, Wrapper } from './styledComponents';
 import GameSpace from '../GameSpace';
 import GlobalStyle from '../StyledCompontents/GlobalStyle';

@@ -4,10 +4,13 @@ import { StyledGameStatus } from './styledComponents';
 import { createGrid } from '../../actions';
 import { getGameStatus } from '../../selectors';
 import PropTypes from 'prop-types';
+import config from '../../config';
 
-const GameStatus = ({gameStatus, replay}) => {
+const { gameStatuses } = config;
+
+const GameStatus = ({ gameStatus, replay }) => {
     return (
-        <StyledGameStatus hidden={gameStatus === 'PLAYING'}>
+        <StyledGameStatus hidden={gameStatus === gameStatuses.PLAYING}>
             <h2>
                 {gameStatus}
             </h2>
@@ -18,12 +21,12 @@ const GameStatus = ({gameStatus, replay}) => {
 }
 
 GameStatus.defaultProps = {
-    gameStatus: 'PLAYING',
-    replay: () => {}
+    gameStatus: gameStatuses.PLAYING,
+    replay: () => { }
 }
 
 GameStatus.propTypes = {
-    gameStatus: PropTypes.oneOf(['PLAYING', 'WON', 'LOST']),
+    gameStatus: PropTypes.oneOf([gameStatuses.PLAYING, gameStatuses.WON, gameStatuses.LOST]),
     replay: PropTypes.func
 }
 

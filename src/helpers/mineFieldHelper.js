@@ -1,4 +1,3 @@
-
 export const createGrid = ({ size, mineChance }) => {
     let grid = [];
     for (let i = 0; i < size; i++) {

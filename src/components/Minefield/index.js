@@ -6,12 +6,9 @@ import RevealIterativeWorker from './revealIterative.worker'
 import { setGrid } from '../../actions';
 import { StyledMineField } from './styledComponents';
 import { getGrid, getGameStatus } from '../../selectors'
+import config from '../../config';
 
-const GAME_STATUSI = {
-    WON: 'WON',
-    LOST: 'LOST',
-    PLAYING: 'PLAYING'
-}
+const { gameStatuses } = config;
 
 const revealIterativeWorker = new RevealIterativeWorker();
 
@@ -59,8 +56,8 @@ class Minefield extends PureComponent {
     renderColumn(column, i) {
 
         const { gameStatus } = this.props;
-        const clickFunction = (gameStatus === GAME_STATUSI.PLAYING) ? (i, j) => this.cellClickHandler(i, j) : () => { };
-        const rightClickFunction = (gameStatus === GAME_STATUSI.PLAYING) ? (i, j) => this.cellRightClickHandler(i, j) : () => { };
+        const clickFunction = (gameStatus === gameStatuses.PLAYING) ? (i, j) => this.cellClickHandler(i, j) : () => { };
+        const rightClickFunction = (gameStatus === gameStatuses.PLAYING) ? (i, j) => this.cellRightClickHandler(i, j) : () => { };
 
         return (
             <div key={i}>
@@ -102,13 +99,13 @@ const mapDispatchToProps = dispatch => {
 
 Minefield.defaultProps = {
     grid: [[]],
-    gameStatus: 'PLAYING',
+    gameStatus: gameStatuses.PLAYING,
     setGrid: () => {}
 }
 
 Minefield.propTypes = {
     grid: PropTypes.arrayOf(PropTypes.array),
-    gameStatus: PropTypes.oneOf(['PLAYING', 'WON', 'LOST']),
+    gameStatus: PropTypes.oneOf([gameStatuses.PLAYING, gameStatuses.WON, gameStatuses.LOST]),
     setGrid: PropTypes.func
 }
 

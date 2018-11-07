@@ -4,21 +4,37 @@ import PropTypes from 'prop-types';
 import { setSize } from '../../actions';
 import Button from '../StyledCompontents/Button';
 import { StyledSizeControl } from './styledComponents';
+import config from '../../config';
+import { getSize, getPlayDimensions } from '../../selectors';
+
+const { cellSize } = config;
 
 const SizeControl = (props) => {
-    const { size, setSize } = props;
+    const { size, setSize, playDimensions } = props;
+    const enableIncrease = checkEnableIncrease(size, playDimensions);
     return (
         <StyledSizeControl>
-            <Button onClick={() => setSize(size - 1)}>-</Button>
+            <Button
+                onClick={() => setSize(size - 1)}
+                disabled={size < 2}
+            >-</Button>
             <p>{size}</p>
-            <Button onClick={() => setSize(size + 1)}>+</Button>
+            <Button
+                onClick={() => setSize(size + 1)}
+                disabled={!enableIncrease}
+            >+</Button>
         </StyledSizeControl>
     )
 }
 
+const checkEnableIncrease = (size, dimensions) => {
+    const nextDimensionUp = (size + 1) * cellSize;
+    return dimensions.width > nextDimensionUp && dimensions.height > nextDimensionUp;
+}
+
 SizeControl.defaultProps = {
     size: 10,
-    setSize: () => {}
+    setSize: () => { }
 }
 
 SizeControl.propTypes = {
@@ -26,8 +42,9 @@ SizeControl.propTypes = {
     setSize: PropTypes.func
 }
 
-const mapStateToProps = ({ settings }) => ({
-    size: settings.size
+const mapStateToProps = (state) => ({
+    size: getSize(state),
+    playDimensions: getPlayDimensions(state)
 })
 
 const mapDispatchToProps = (dispatch) => ({

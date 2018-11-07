@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Panel = styled.div`
+const Floater = styled.div`
     margin: 0;
     overflow: hidden;
     display: flex;
@@ -8,4 +8,4 @@ const Panel = styled.div`
     flex-direction: ${props => props.vertical ? 'column' : 'row'};
 `;
 
-export default Panel;
+export default Floater;

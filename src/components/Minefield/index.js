@@ -5,6 +5,8 @@ import Cell from '../Cell';
 import RevealIterativeWorker from './revealIterative.worker'
 import { setGrid, setGameStatus } from '../../actions';
 import { StyledMineField } from './styledComponents';
+import { getGrid, getGameStatus } from '../../selectors'
+
 
 const GAME_STATUSI = {
     WON: 'WON',
@@ -108,10 +110,10 @@ class Minefield extends Component {
     }
 }
 
-const mapStateToProps = ({ grid, gameStatus }) => {
+const mapStateToProps = (state) => {
     return {
-        grid,
-        gameStatus
+        grid: getGrid(state),
+        gameStatus: getGameStatus(state)
     }
 }
 

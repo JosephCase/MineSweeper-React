@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Panel from '../StyledCompontents/Floater';
 import { Option, StyledDifficultyControl } from './styledComponents';
 import { connect } from 'react-redux';
 import { setMineChance } from '../../actions';
+import { getMineChance } from '../../selectors';
 
 const difficulties = [
     { mineChance: 0.25, text: 'Super hard' },
@@ -32,15 +32,15 @@ const DifficultyControl = ({ mineChance, setMineChance }) => (
     </StyledDifficultyControl>
 )
 
-const mapStateToProps = ({ settings }) => {
+const mapStateToProps = state => {
     return {
-        mineChance: settings.mineChance
+        mineChance: getMineChance(state)
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        setMineChance: (mineChance, size) => {
+        setMineChance: (mineChance) => {
             dispatch(setMineChance(mineChance));
         }
     }

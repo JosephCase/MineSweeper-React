@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import Floater from '../StyledCompontents/Floater';
+import config from '../../config';
 
 export const StyledSizeControl = styled(Floater)`
-    font-family: arial, sans-serif;
     height: 120px;
     align-items: center;
     background-color: lightgrey;
@@ -23,5 +23,11 @@ export const StyledSizeControl = styled(Floater)`
         width: 34px;
         text-align: center;
     }
+
+    @media (max-width: ${config.breakPoints.b1000}) {
+        padding-right: 0;
+        height: 100px;
+    }
+
     
 `;

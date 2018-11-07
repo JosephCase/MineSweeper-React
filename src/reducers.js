@@ -1,7 +1,7 @@
 import { actionTypes } from './actions'
 import { combineReducers } from 'redux';
 
-const { SET_GRID, SET_GAME_STATUS, SET_MINE_CHANCE, SET_SIZE } = actionTypes;
+const { CREATE_GRID, SET_GRID, SET_GAME_STATUS, SET_MINE_CHANCE, SET_SIZE, SET_PLAY_DIMENSIONS } = actionTypes;
 
 const grid = (state = [[]], action, settings) => {
 
@@ -20,6 +20,7 @@ const gameStatus = (state = 'PLAYING', action) => {
     switch (type) {
         case SET_GAME_STATUS:
             return gameStatus;
+        case CREATE_GRID:
         case SET_MINE_CHANCE:
         case SET_SIZE:
             return 'PLAYING'
@@ -54,8 +55,19 @@ const settings = combineReducers({
     size
 })
 
+const playDimensions = (state = {width: null, height: null}, action) => {
+    const { type, dimensions } = action;
+    switch(type) {
+        case SET_PLAY_DIMENSIONS:
+            return dimensions;
+        default:
+            return state;
+    }
+}
+
 export default combineReducers({
     grid,
     settings,
-    gameStatus
+    gameStatus,
+    playDimensions
 });

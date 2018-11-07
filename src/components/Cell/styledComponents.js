@@ -28,13 +28,13 @@ const calculateColor = ({ open, mine, marked, mistaken, exploded }) => {
 }
 
 export const StyledCell = styled.p`
+    box-sizing: border-box;
     margin: 0;
-    width: 32px;
-    height: 32px;
-    line-height: 32px;
+    width: ${props => props.cellSize}px;
+    height: ${props => props.cellSize}px;
+    line-height: ${props => props.cellSize}px;
     text-align: center;
     border: 1px solid black;
-    font-family: arial, sans-serif;
     background: ${props => calculateBgColor(props)};
     cursor: pointer;
     user-select: none;

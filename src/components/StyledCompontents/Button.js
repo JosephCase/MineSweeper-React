@@ -4,7 +4,6 @@ const Button = styled.button`
     display: block;
     box-sizing: border-box;
     border: none;
-    font-family: arial, sans-serif;
     font-size: 18px;
     background: #fff;
     text-align: center;

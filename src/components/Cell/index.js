@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyledCell } from './styledComponents';
+import config from '../../config';
 
 const calculateDisplayValue = ({ adjacentMines = 0, hasMine, open, marked }) => {
     if (open) {
@@ -49,15 +50,18 @@ const Cell = (props) => {
 
     const displayVal = calculateDisplayValue({ adjacentMines, hasMine, open, marked });
 
+    const { cellSize } = config;    // [X] doing this directly in the import
+
     return (
         <StyledCell
-            onClick={() => clickHandler({ marked, onClick })}
-            onContextMenu={(e) => rightClickHandler({ e, onRightClick })}
             open={open}
             mine={hasMine}
             marked={marked}
             mistaken={mistaken}
             exploded={exploded}
+            cellSize={cellSize}
+            onClick={() => clickHandler({ marked, onClick })}
+            onContextMenu={(e) => rightClickHandler({ e, onRightClick })}
         >{displayVal}</StyledCell>
     )
 }

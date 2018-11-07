@@ -7,6 +7,9 @@ import SizeControl from '../SizeControl';
 import { createGrid } from '../../actions';
 import Floater from '../StyledCompontents/Floater';
 import { StyledMineSweeper, Wrapper } from './styledComponents';
+import GameSpace from '../GameSpace';
+import GlobalStyle from '../StyledCompontents/GlobalStyle';
+import GameStatus from '../GameStatus';
 
 const Minesweeper = (props) => {
 
@@ -16,10 +19,14 @@ const Minesweeper = (props) => {
     return (
         <StyledMineSweeper vertical>
             <Wrapper>
-                <Minefield />
+                <GameSpace>
+                    <Minefield />
+                    <GameStatus />
+                </GameSpace>
                 <DifficultyControl />
             </Wrapper>
             <SizeControl />
+            <GlobalStyle />
         </StyledMineSweeper>
     )
 

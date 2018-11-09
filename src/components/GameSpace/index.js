@@ -4,7 +4,7 @@ import { setPlayDimensions } from '../../redux/actions';
 import StyledGameSpace from './StyledGameSpace';
 import PropTypes from 'prop-types';
 
-class GameSpace extends PureComponent {
+export class GameSpace extends PureComponent {
     constructor(props) {
         super(props);
         this.elementRef = React.createRef();

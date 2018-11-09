@@ -8,7 +8,7 @@ const getDisplayValue = ({ adjacentMines = 0, hasMine, open, marked }) => {
     if (open && hasMine) {
         return 'x';
     }
-    if (open && adjacentMines === 0) {
+    if (open && adjacentMines < 1) {
         return '';
     }
     if (open) {
@@ -35,6 +35,7 @@ const clickHandler = ({ marked, onClick }) => {
     onClick();
 }
 const rightClickHandler = ({ e, onRightClick }) => {
+
     e.preventDefault();
     onRightClick();
 }

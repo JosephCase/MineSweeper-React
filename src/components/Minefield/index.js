@@ -1,18 +1,18 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Cell from '../Cell';
 import RevealIterativeWorker from './revealIterative.worker'
-import { setGrid } from '../../actions';
+import { setGrid } from '../../redux/actions';
 import { StyledMineField } from './styledComponents';
-import { getGrid, getGameStatus } from '../../selectors'
+import { getGrid, getGameStatus } from '../../redux/selectors'
 import config from '../../config';
 
 const { gameStatuses } = config;
 
 const revealIterativeWorker = new RevealIterativeWorker();
 
-class Minefield extends PureComponent {
+export class Minefield extends Component {
 
     cellClickHandler(x, y) {
 

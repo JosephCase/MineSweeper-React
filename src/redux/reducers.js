@@ -1,6 +1,6 @@
 import { actionTypes } from './actions'
 import { combineReducers } from 'redux';
-import config from './config';
+import config from '../config';
 
 const { difficulties, defaultSize } = config;
 

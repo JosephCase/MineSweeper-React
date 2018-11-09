@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Option, StyledDifficultyControl } from './styledComponents';
 import { connect } from 'react-redux';
-import { setMineChance } from '../../actions';
-import { getMineChance } from '../../selectors';
+import { setMineChance } from '../../redux/actions';
+import { getMineChance } from '../../redux/selectors';
 import config from '../../config';
 
 const { difficulties } = config;
 
-const DifficultyControl = ({ mineChance, setMineChance }) => (
+export const DifficultyControl = ({ mineChance, setMineChance }) => (
     <StyledDifficultyControl vertical>
         {
             difficulties.map(difficulty => {

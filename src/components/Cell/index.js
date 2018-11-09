@@ -39,7 +39,6 @@ const rightClickHandler = ({ e, onRightClick }) => {
     onRightClick();
 }
 
-
 const Cell = (props) => {
 
     const { cellSize } = config;

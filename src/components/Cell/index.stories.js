@@ -1,52 +1,30 @@
 import React from 'react';
 
 import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
+// import { action } from '@storybook/addon-actions';
+import { boolean, select } from '@storybook/addon-knobs';
 
 import Cell from './';
 
-storiesOf('Cell', module)
-
-    .add('when default', () => (
-        <Cell
-            open={false}
-            marked={false}
-            clickHandler={action('clicked')}
-        />
-    ))
-    .add('when open', () => (
-        <Cell
-            open={true}
-            clickHandler={action('clicked')}
-        />
-    ))
-    .add('when marked', () => (
-        <Cell
-            open={false}
-            marked={true}
-            clickHandler={action('clicked')}
-        />
-    ))
-    .add('when open with adjacent mines', () => (
-        <Cell
-            open={true}
-            adjacentMines={1}
-            clickHandler={action('clicked')}
-        />
-    ))
-    .add('when open with mine', () => (
-        <Cell
-            open={true}
-            hasMine={true}
-            clickHandler={action('clicked')}
-        />
-    ))
-    .add('when mistakenly marked', () => (
-        <Cell
-            marked={true}
-            mistaken={true}
-        />
-    ))
+const stories = storiesOf('Cell', module);
 
 
-
+    stories.addWithJSX('playground', () => (
+        <Cell 
+            open={boolean('Open', false)}
+            marked={boolean('Marked', false)}
+            adjacentMines={select('adjacentMines', {
+                1: 1,
+                2: 2,
+                3: 3,
+                4: 4,
+                5: 5,
+                6: 6,
+                7: 7,
+                8: 8,
+            })}
+            hasMine={boolean('hasMine', false)}
+            exploded={boolean('exploded', false)}
+            mistaken={boolean('mistaken', false)}
+        />
+    ))

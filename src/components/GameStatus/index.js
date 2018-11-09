@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StyledGameStatus } from './styledComponents';
-import { createGrid } from '../../actions';
-import { getGameStatus } from '../../selectors';
+import { createGrid } from '../../redux/actions';
+import { getGameStatus } from '../../redux/selectors';
 import PropTypes from 'prop-types';
 import config from '../../config';
 
 const { gameStatuses } = config;
 
-const GameStatus = ({ gameStatus, replay }) => {
+export const GameStatus = ({ gameStatus, replay }) => {
     return (
         <StyledGameStatus hidden={gameStatus === gameStatuses.PLAYING}>
             <h2>

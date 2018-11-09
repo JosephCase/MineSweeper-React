@@ -1,7 +1,7 @@
 import { takeLatest, put, select } from 'redux-saga/effects';
 import { actionTypes, setGrid } from './actions';
 import { getSettings } from './selectors';
-import { createGrid as createGridHelper } from './helpers/mineFieldHelper';
+import { createGrid as createGridHelper } from '../helpers/mineFieldHelper';
 
 const { SET_SIZE, SET_MINE_CHANCE, CREATE_GRID } = actionTypes;
 

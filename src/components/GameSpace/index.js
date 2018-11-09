@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { setPlayDimensions } from '../../actions';
+import { setPlayDimensions } from '../../redux/actions';
 import StyledGameSpace from './StyledGameSpace';
 import PropTypes from 'prop-types';
 

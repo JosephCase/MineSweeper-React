@@ -1,15 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { setSize } from '../../actions';
+import { setSize } from '../../redux/actions';
 import Button from '../StyledCompontents/Button';
 import { StyledSizeControl } from './styledComponents';
 import config from '../../config';
-import { getSize, getPlayDimensions } from '../../selectors';
+import { getSize, getPlayDimensions } from '../../redux/selectors';
 
 const { cellSize } = config;
 
-const SizeControl = (props) => {
+export const SizeControl = (props) => {
     const { size, setSize, playDimensions } = props;
     const enableIncrease = checkEnableIncrease(size, playDimensions);
     return (

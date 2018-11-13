@@ -12,7 +12,7 @@ export const getPlayDimensions = state => state.playDimensions;
 
 export const getGameStatus = state => {
     const grid = getGrid(state);
-    if(grid.every(column => column.every(cell => (cell.open || cell.marked)))) {
+    if(grid.every(column => column.every(cell => (cell.open || (cell.hasMine && cell.marked))))) {
         return gameStatuses.WON;
     }
     if(grid.some(column => column.some(cell => (cell.open && cell.hasMine)))) {

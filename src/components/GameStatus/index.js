@@ -10,7 +10,7 @@ const { gameStatuses } = config;
 
 export const GameStatus = ({ gameStatus, replay }) => {
     return (
-        <StyledGameStatus hidden={gameStatus === gameStatuses.PLAYING}>
+        <StyledGameStatus data-cy='GameStatus' hidden={gameStatus === gameStatuses.PLAYING}>
             <h2>
                 {gameStatus}
             </h2>

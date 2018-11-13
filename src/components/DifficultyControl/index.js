@@ -9,12 +9,13 @@ import config from '../../config';
 const { difficulties } = config;
 
 export const DifficultyControl = ({ mineChance, setMineChance }) => (
-    <StyledDifficultyControl vertical>
+    <StyledDifficultyControl vertical data-cy='DifficultyControl'>
         {
             difficulties.map(difficulty => {
                 const isSelectedDifficulty = mineChance === difficulty.mineChance;
                 return (
                     <Option
+                        data-cy={difficulty.text}
                         key={difficulty.mineChance}
                         onClick={() => setMineChance(difficulty.mineChance)}
                         selected={isSelectedDifficulty}

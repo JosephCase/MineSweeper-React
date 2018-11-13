@@ -13,7 +13,7 @@ export const SizeControl = (props) => {
     const { size, setSize, playDimensions } = props;
     const enableIncrease = checkEnableIncrease(size, playDimensions);
     return (
-        <StyledSizeControl>
+        <StyledSizeControl data-cy="SizeControl">
             <Button
                 onClick={() => setSize(size - 1)}
                 disabled={size < 2}

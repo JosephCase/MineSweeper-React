@@ -77,7 +77,7 @@ export class Minefield extends Component {
     render() {
         const { grid } = this.props;
         return (
-            <StyledMineField>
+            <StyledMineField data-cy="MineField">
                 {grid.map(this.renderColumn, this)}
             </StyledMineField>
         )
